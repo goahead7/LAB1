@@ -34,6 +34,8 @@ class User
      * @ORM\OneToMany(targetEntity=ToDo::class, mappedBy="user")
      */
     private $todo_list;
+    
+
 
     public function __construct()
     {
@@ -100,6 +102,8 @@ class User
         return $this;
     }
 
+
+    
    
 
 }
