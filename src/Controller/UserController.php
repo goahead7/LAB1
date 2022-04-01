@@ -19,38 +19,47 @@ class UserController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data["login"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain login"
-            ]);
+                ]
+            );
         }
 
         if (!isset($data["password"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain password"
-            ]);
+                ]
+            );
         }
 
         if ($data["login"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "login not entered"
-            ]);
+                ]
+            );
         }
         if ($data["password"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "password not entered"
-            ]);
+                ]
+            );
         }
 
-        if ($userRepository->findOneBy(["login"=>$data["login"]]) != null)
-        {
-            return $this->json([
+        if ($userRepository->findOneBy(["login"=>$data["login"]]) != null) {
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "user with this login alredy exist"
-            ]);
+                ]
+            );
         }
 
         $user = new User();
@@ -61,9 +70,11 @@ class UserController extends AbstractController
         $db->persist($user);
         $db->flush();
 
-        return $this->json([
+        return $this->json(
+            [
             'status' => 200,
             'text' => "registration completed"
-        ]);
+            ]
+        );
     }
 }

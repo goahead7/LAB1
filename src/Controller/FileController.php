@@ -12,14 +12,12 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * @Route("/files")
  */
 
 class FileController extends AbstractController
 {
-
     private FileRepository $fileRepository;
 
     private EntityManagerInterface $entityManager;
@@ -27,8 +25,7 @@ class FileController extends AbstractController
     public function __construct(
         FileRepository $fileRepository,
         EntityManagerInterface $entityManager
-    )
-    {
+    ) {
         $this->fileRepository = $fileRepository;
         $this->entityManager = $entityManager;
     }
@@ -44,10 +41,12 @@ class FileController extends AbstractController
             $fileName = $data->getClientOriginalName();
             $fileDuplicate = $this->fileRepository->findBy(['name' => $fileName]);
             if ($fileDuplicate) {
-                return $this->json([
+                return $this->json(
+                    [
                     'status' => 500,
                     'text' => "File with the same name has already been added"
-                ]);
+                    ]
+                );
             }
             $fileDirectory = $this->getParameter('kernel.project_dir') . '/var';
 
@@ -63,16 +62,20 @@ class FileController extends AbstractController
             $db->persist($file);
             $db->flush();
 
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 200,
                 'text' => "Adding was successful"
-            ]);
+                ]
+            );
         }
 
-        return $this->json([
+        return $this->json(
+            [
             'status' => 400,
             'text' => "File was not added. Try again"
-        ]);
+            ]
+        );
     }
 
 
@@ -90,15 +93,19 @@ class FileController extends AbstractController
                     'size' => $file->getSize()
                 ];
             }
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 200,
                 'files' => $data
-            ]);
+                ]
+            );
         }
-        return $this->json([
+        return $this->json(
+            [
             'status' => 500,
             'text' => "Files were not found"
-        ]);
+            ]
+        );
     }
 
     /**
@@ -114,10 +121,12 @@ class FileController extends AbstractController
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $name);
             return $response;
         }
-        return $this->json([
+        return $this->json(
+            [
             'status' => 500,
             'text' => "Files were not found"
-        ]);
+            ]
+        );
     }
 
     /**
@@ -130,15 +139,18 @@ class FileController extends AbstractController
             $this->entityManager->remove($file);
             $this->entityManager->flush();
             unlink($this->getParameter('kernel.project_dir') . '/var/' . $name);
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 200,
                 'text' => "Files deleted"
-            ]);
+                ]
+            );
         }
-        return $this->json([
+        return $this->json(
+            [
             'status' => 500,
             'text' => "Files were not found"
-        ]);
+            ]
+        );
     }
-
 }

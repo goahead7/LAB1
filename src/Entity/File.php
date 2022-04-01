@@ -1,13 +1,25 @@
 <?php
+/**
+ * File
+ * php version 8.0
+ *
+ * @category Entity
+ * @package  App\Entity
+ * @author   Kuznetsova Sophia <sophia.kuznetsova.7@gmail.com>
+ * @license  https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt /
+ * somename
+ * BSD Licence
+ * @link     https://github.com/goahead7/LAB1
+ *
+ * @ORM\Table(name="file")
+ * @ORM\Entity(repositoryClass=FileRepository::class)
+ */
 
 namespace App\Entity;
 
 use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=FileRepository::class)
- */
 class File
 {
     /**
@@ -56,5 +68,4 @@ class File
 
         return $this;
     }
-
 }

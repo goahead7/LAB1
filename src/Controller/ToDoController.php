@@ -21,65 +21,83 @@ class ToDoController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data["login"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain login"
-            ]);
+                ]
+            );
         }
 
         if (!isset($data["password"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain password"
-            ]);
+                ]
+            );
         }
 
         if (!isset($data["discription"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain discription"
-            ]);
+                ]
+            );
         }
 
         if (!isset($data["todo_name"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain todo_name"
-            ]);
+                ]
+            );
         }
 
         if ($data["login"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "login not entered"
-            ]);
+                ]
+            );
         }
         if ($data["password"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "password not entered"
-            ]);
+                ]
+            );
         }
 
         if ($data["todo_name"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "todo_name not entered"
-            ]);
+                ]
+            );
         }
 
         $user = $userRepository->findOneBy(["login"=>$data["login"]]);
         if ($user == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text'=> "this user is not registered"
-            ]);
+                ]
+            );
         }
         if ($user->getPassword() != $data["password"]) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text'=> "password error"
-            ]);
+                ]
+            );
         }
 
         $todo = new ToDo();
@@ -92,10 +110,12 @@ class ToDoController extends AbstractController
         $db->persist($todo);
         $db->persist($user);
         $db->flush();
-        return $this->json([
+        return $this->json(
+            [
             'status' => 200,
             'text'=> "todo was added"
-        ]);
+            ]
+        );
     }
 
     /**
@@ -106,52 +126,66 @@ class ToDoController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
         if (!isset($data["login"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain login"
-            ]);
+                ]
+            );
         }
 
         if (!isset($data["password"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain password"
-            ]);
+                ]
+            );
         }
 
         if ($data["login"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "login not entered"
-            ]);
+                ]
+            );
         }
         if ($data["password"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "password not entered"
-            ]);
+                ]
+            );
         }
         $user = $userRepository->findOneBy(["login"=>$data["login"]]);
 
         if ($user == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text'=> "error user"
-            ]);
+                ]
+            );
         }
         if ($user->getPassword() != $data["password"]) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text'=> "password error"
-            ]);
+                ]
+            );
         }
 
         $todolist = $toDoRepository->findBy(["user"=>$user]);
 
         if ($todolist == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
-                'text' => "todo is null"]);
+                'text' => "todo is null"]
+            );
         }
 
         foreach ($todolist as $todo) {
@@ -161,11 +195,12 @@ class ToDoController extends AbstractController
             $result[] = $todolist_arr;
         }
 
-        return $this->json([
+        return $this->json(
+            [
             'status' => 200,
             'text'=> $result
-        ]);
-
+            ]
+        );
     }
 
     /**
@@ -177,81 +212,103 @@ class ToDoController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data["login"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain login"
-            ]);
+                ]
+            );
         }
 
         if (!isset($data["password"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain password"
-            ]);
+                ]
+            );
         }
 
         if (!isset($data["discription"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain discription"
-            ]);
+                ]
+            );
         }
 
         if (!isset($data["todo_name"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain todo_name"
-            ]);
+                ]
+            );
         }
 
         if ($data["login"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "login not entered"
-            ]);
+                ]
+            );
         }
         if ($data["password"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "password not entered"
-            ]);
+                ]
+            );
         }
 
         if ($data["todo_name"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "todo_name not entered"
-            ]);
+                ]
+            );
         }
         $user = $userRepository->findOneBy(["login" => $data["login"]]);
 
         if ($user == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "error user"
-            ]);
+                ]
+            );
         }
         if ($user->getPassword() != $data["password"]) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "password error"
-            ]);
+                ]
+            );
         }
 
         $todo = $toDoRepository->find($id);
 
         if ($todo == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "no this todo"
-            ]);
+                ]
+            );
         }
 
-        if($user != $todo->getUser()) {
-            return $this->json([
+        if ($user != $todo->getUser()) {
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "can't change this todo"
-            ]);
+                ]
+            );
         }
         $todo->setTodoName($data["todo_name"]);
         $todo->setDiscription($data["discription"]);
@@ -261,74 +318,92 @@ class ToDoController extends AbstractController
         $db->merge($todo);
         $db->flush();
 
-        return $this->json([
+        return $this->json(
+            [
             'status' => 200,
             'text' => "todo change"
-        ]);
+            ]
+        );
     }
-        /**
-         * @Route("/todo/{id}", name="delete_todo", methods={"DELETE"} )
-         */
+    /**
+     * @Route("/todo/{id}", name="delete_todo", methods={"DELETE"} )
+     */
     public function delete_todo(Request $request, ToDoRepository $toDoRepository, UserRepository $userRepository, $id): Response
     {
         $data = json_decode($request->getContent(), true);
         if (!isset($data["login"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain login"
-            ]);
+                ]
+            );
         }
 
         if (!isset($data["password"])) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "file doesn't contain password"
-            ]);
+                ]
+            );
         }
 
         if ($data["login"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "login not entered"
-            ]);
+                ]
+            );
         }
         if ($data["password"] == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "password not entered"
-            ]);
+                ]
+            );
         }
 
         $user = $userRepository->findOneBy(["login" => $data["login"]]);
 
         if ($user == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "error user"
-            ]);
+                ]
+            );
         }
         if ($user->getPassword() != $data["password"]) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "password error"
-            ]);
+                ]
+            );
         }
 
         $todo = $toDoRepository->find($id);
 
 
         if ($todo == null) {
-            return $this->json([
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "todo not remove"
-            ]);
+                ]
+            );
         }
 
-        if($user != $todo->getUser()) {
-            return $this->json([
+        if ($user != $todo->getUser()) {
+            return $this->json(
+                [
                 'status' => 400,
                 'text' => "todo not remove"
-            ]);
+                ]
+            );
         }
         $user->removeTodoList($todo);
         $db = $this->getDoctrine()->getManager();
@@ -337,9 +412,11 @@ class ToDoController extends AbstractController
         $db->remove($todo);
         $db->flush();
 
-        return $this->json([
+        return $this->json(
+            [
             'status' => 200,
             'text' => "todo remove"
-        ]);
+            ]
+        );
     }
 }
